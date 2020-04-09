@@ -1,5 +1,7 @@
 # PictureLoom
  Java program to make any photograph into a circular loom design using the [Processing](https://processing.org/) and the [G4P](http://www.lagers.org.uk/g4p/) libraries.
+ 
+![Example!](Mihir_face_string3.png)
 
 **Instructions:**
 * Install Java if it is not already installed
