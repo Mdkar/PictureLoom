@@ -23,19 +23,11 @@
 * Embroidery file that can be used on an embroidery machine to recreate the loom in real life (see Embroidery section)
 
 **Loom Properties:**
-The default loom properties are OK for giving decent images in a managable time in general, but can be tweaked for better quality or performance.
-
-Number of Pegs
-* This is the number of pegs that are around the circular loom. The more pegs, the finer the resolution. Making this an even number may cause the program to crash.
-
-Minimum Gap
-* The program skips this many pegs on both sides of the current peg when picking the next peg to tie the string to
-
-Max Moves
-* This is how many strings the program will weave (unless paused or stopped early)
-
-Line Weight
-* This is how "thick" the string is. It is actually a measure of opacity (0-255).
+The default loom properties are OK for giving decent images in a managable time in general, but can be tweaked for better quality or performance.  
+* **Number of Pegs** - This is the number of pegs that are around the circular loom. The more pegs, the finer the resolution. Making this an even number may cause the program to crash.  
+* **Minimum Gap** - The program skips this many pegs on both sides of the current peg when picking the next peg to tie the string to.  
+* **Max Moves** - This is how many strings the program will weave (unless paused or stopped early).  
+* **Line Weight** - This is how "thick" the string is. It is actually a measure of opacity (0-255).
 
 **Embroidery:**
 This feature is a bit experimental and may not work 100% of the time. The program attempts to create a .exp file (basic embroidery file) that can be read by most embroidery machines. I have tested 1 design on a Singer Futura SES 2000 and it worked. On my machine it creates the design backwards and upside down in a 10cm diameter circle. It uses a *lot* of thread and I would suggest using a design with a low 'Max Moves' and a high 'Line Weight' (around 70). Make sure all your machine's settings are correct and make sure the cloth is stretched very well in the hoop.
