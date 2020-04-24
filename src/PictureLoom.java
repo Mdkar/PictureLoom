@@ -255,16 +255,22 @@ public class PictureLoom extends PApplet{
 		stringImg.updatePixels();
 		pg = createGraphics(img.width, img.height);
 		image(img, 0, 0);
-		float pegX, pegY, angle;
-		int i = 0;
-		for(angle = 0; angle <= 2*Math.PI - 2*Math.PI/nPegs; angle+=(2*Math.PI/nPegs)) {
+		float pegX, pegY, angle = 0;
+		for(int i = 0; i < nPegs; i++) {
 			pegX = (float) (img.width/2 + (img.width * Math.cos(angle)/2));
 			pegY = (float) (img.height/2 + (img.height * Math.sin(angle)/2));
 			point(pegX, pegY);
 			pegs[i] = new Point(pegX, pegY);
-			//System.out.println("Peg " + i +": (" + pegX + "," + pegY + ")");
-			i++;
+			angle+=(2*Math.PI/nPegs);
 		}
+//		for(angle = 0; angle <= 2*Math.PI - 2*Math.PI/nPegs; angle+=(2*Math.PI/nPegs)) {
+//			pegX = (float) (img.width/2 + (img.width * Math.cos(angle)/2));
+//			pegY = (float) (img.height/2 + (img.height * Math.sin(angle)/2));
+//			point(pegX, pegY);
+//			pegs[i] = new Point(pegX, pegY);
+//			//System.out.println("Peg " + i +": (" + pegX + "," + pegY + ")");
+//			i++;
+//		}
 		System.out.println("Total pegs: " + nPegs + ", Total winds: " + maxMoves);
 		println("current move: " + currMove);
 		if(!animate) {
@@ -449,7 +455,7 @@ public class PictureLoom extends PApplet{
 		int oldX, oldY;
 		oldX = round(map(pegs[0].x, 0, img.width, -(100 * clothSize/2), 100*clothSize/2));
 		oldY = round(map(pegs[0].y, 0, img.height, -(100 * clothSize/2), 100*clothSize/2));
-		addStitch(oldX, oldY, true);
+		addStitch(oldX, oldY);
 		bytes.add((byte) 0);
 		bytes.add((byte) 0);
 		bytes.add((byte) 1);
@@ -463,7 +469,7 @@ public class PictureLoom extends PApplet{
 		for(int i = 1; i < moves.length; i++) {
 			int currX = round(map(pegs[moves[i]].x, 0, img.width, -(100 * clothSize/2), 100*clothSize/2));
 			int currY = round(map(pegs[moves[i]].y, 0, img.height, -(100 * clothSize/2), 100*clothSize/2));
-			addStitch(currX - oldX, currY - oldY, true);
+			addStitch(currX - oldX, currY - oldY);
 			bytes.add((byte) 0);
 			bytes.add((byte) 0);
 			bytes.add((byte) 1);
@@ -484,29 +490,44 @@ public class PictureLoom extends PApplet{
 		saveBytes(fileName.substring(0, fileName.lastIndexOf('.')) + "_string.exp", data);
 		
 	}
-
-	public void addStitch(int dx, int dy, boolean jump) {
-		//System.out.println(dx + ", " + dy);
-		if(Math.abs(dx) > 10 || Math.abs(dy) > 10) {	
-			int cx = 0, cy = 0, sumx = 0, sumy = 0;
-			for(int i = 1; i <= 10; i++) {
-				cx = round(lerp(0, dx, 0.1f));
-				cy = round(lerp(0, dy, 0.1f));
-				sumx += cx;
-				sumy += cy;
-				addStitch(cx, cy, jump);
+	public void addStitch(int dx, int dy) {
+		if(Math.abs(dx) > 127 || Math.abs(dy) > 127) {	
+			if(dx%127 != 0 || dy%127 != 0) {
+				addStitch(dx%127, dy%127);
+				dx = ((int) dx/127) * 127;
+				dy = ((int) dy/127) * 127;
 			}
-			if(sumx != dx || sumy != dy) {
-				//System.out.println(dx + "-" + sumx + ", " + dy + "-" + sumy);
-				addStitch(dx - sumx, dy - sumy, jump);
-			}
+			addStitch(Integer.signum(dx)*127, Integer.signum(dy)*127);
+			addStitch(dx-(Integer.signum(dx)*127), dy-(Integer.signum(dy)*127));		
 		} else {
-			if(jump) {
-				bytes.add((byte) -128);
-				bytes.add((byte) 4);
-			}
+			bytes.add((byte) -128);
+			bytes.add((byte) 4);
 			bytes.add((byte) dx);
 			bytes.add((byte) dy);
 		}
 	}
+//	public void addStitch(int dx, int dy, boolean jump) {
+//		//System.out.println(dx + ", " + dy);
+//		if(Math.abs(dx) > 10 || Math.abs(dy) > 10) {	
+//			int cx = 0, cy = 0, sumx = 0, sumy = 0;
+//			for(int i = 1; i <= 10; i++) {
+//				cx = round(lerp(0, dx, 0.1f));
+//				cy = round(lerp(0, dy, 0.1f));
+//				sumx += cx;
+//				sumy += cy;
+//				addStitch(cx, cy, jump);
+//			}
+//			if(sumx != dx || sumy != dy) {
+//				//System.out.println(dx + "-" + sumx + ", " + dy + "-" + sumy);
+//				addStitch(dx - sumx, dy - sumy, jump);
+//			}
+//		} else {
+//			if(jump) {
+//				bytes.add((byte) -128);
+//				bytes.add((byte) 4);
+//			}
+//			bytes.add((byte) dx);
+//			bytes.add((byte) dy);
+//		}
+//	}
 }
