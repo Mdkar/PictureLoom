@@ -1,11 +1,11 @@
 # PictureLoom
  Java program to make any photograph into a circular loom design using the [Processing](https://processing.org/) and the [G4P](http://www.lagers.org.uk/g4p/) libraries.
 
-![Example!](Mihir_face_string3.png)
+ You can play with your creations, share, and embed them into a website using my [PictureLoom Viewer](https://mdkar.github.io/PictureLoom/). Read more on my [website](https://mdkar.github.io/projects/PictureLoom/)
 
 **Instructions:**
 * Install Java if it is not already installed
-* Download and Run PictureLoom.jar
+* **Download and Run PictureLoom.jar**
 * Set the loom properties (optional)
 * Click 'Load Image' to pick an image to loom\
 -OR-
@@ -45,3 +45,5 @@ This feature is a bit experimental and may not work 100% of the time. The progra
    * Try decreasing 'Line Weight'
 * For a faster image do the opposite and increase 'Minimum Gap'
 * If you are getting many dark lines around the border or through the image where there shouldn't be any, your 'Max Moves' and/or 'Line Weight' is too high
+
+![Example!](Mihir_face_string3.png)
